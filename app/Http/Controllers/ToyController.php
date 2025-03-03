@@ -7,6 +7,8 @@ use App\Models\Toy;
 use App\Models\ToyCategories;
 use App\Models\ToyHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ToyController extends Controller
@@ -52,22 +54,24 @@ class ToyController extends Controller
     }
     public function update(Request $request,$id)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'gender' => 'required|in:girl,boy',
+            'brand_id' => ['required', 'string', Rule::exists(Brand::class, 'id')],
+            'categories' => 'required|array',
+            'categories.*' => ['required', 'string', Rule::exists(ToyCategories::class, 'id')],
+        ]);
+        if ($validator->fails()) {
+            Alert::error('Validation Error', implode('<br>', $validator->errors()->all()));
+            return back();
+        }
         $item = Toy::find($id);
         $item->name = $request->name;
         $item->gender = $request->gender;
         $item->brand_id = $request->brand_id;
         $item->save();
-        $item->categories()->detech(); 
-        if ($request->has('categories')) {
-            foreach ($request->categories as $categoryId) {
-                $toyhelper = new ToyHelper();
-                $toyhelper->toy_id = $item->id;
-                $toyhelper->category_id = $categoryId;
-                $toyhelper->save();
-            }
-        }
-        return back();
+        $item->categories()->sync($request->categories); 
         Alert::success('Success', 'Data has been Updated');                           
-
+        return back();
     }
 }
