@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\BukuController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\PenerbitController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ToyCategoryController;
@@ -51,4 +54,22 @@ Route::group(['prefix' => 'toycategory'], function () {
     Route::post('/create', [ToyCategoryController::class, 'create'])->name('create');
     Route::get('/delete/{id}', [ToyCategoryController::class, 'delete'])->name('delete');
     Route::post('/update/{id}', [ToyCategoryController::class, 'update'])->name('update');
+});
+Route::group(['prefix' => 'buku'], function () {
+    Route::get('/', [BukuController::class, 'index'])->name('index');
+    Route::post('/create', [BukuController::class, 'create'])->name('create');
+    Route::get('/delete/{id}', [BukuController::class, 'delete'])->name('delete');
+    Route::post('/update/{id}', [BukuController::class, 'update'])->name('update');
+});
+Route::group(['prefix' => 'genre'], function () {
+    Route::get('/', [GenreController::class, 'index'])->name('index');
+    Route::post('/create', [GenreController::class, 'create'])->name('create');
+    Route::get('/delete/{id}', [GenreController::class, 'delete'])->name('delete');
+    Route::post('/update/{id}', [GenreController::class, 'update'])->name('update');
+});
+Route::group(['prefix' => 'penerbit'], function () {
+    Route::get('/', [PenerbitController::class, 'index'])->name('index');
+    Route::post('/create', [PenerbitController::class, 'create'])->name('create');
+    Route::get('/delete/{id}', [PenerbitController::class, 'delete'])->name('delete');
+    Route::post('/update/{id}', [PenerbitController::class, 'update'])->name('update');
 });
