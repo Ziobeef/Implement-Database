@@ -6,7 +6,10 @@ use App\Models\Buku;
 use App\Models\BukuGenre;
 use App\Models\Genre;
 use App\Models\Penerbit;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BukuController extends Controller
@@ -51,11 +54,23 @@ class BukuController extends Controller
     }
     public function update(Request $request, $id)
     {
+        
+        $validator = Validator::make($request->all(), [
+            'judul' => 'required|string|max:255',
+            
+            'penerbit_id' => ['required', 'string', Rule::exists(Penerbit::class, 'id')],
+            'genres' => 'required|array',
+            'genres.*' => ['required', 'string', Rule::exists(Genre::class, 'id')],
+        ]);
+        if ($validator->fails()) {
+            Alert::error('Validation Error', implode('<br>', $validator->errors()->all()));
+            return back();
+        }
         $item = Buku::find($id);
         $item->judul = $request->judul;
         $item->penerbit_id = $request->penerbit_id;
-        $item->genre = $request->genre;
         $item->save();
+        $item->genres()->sync($request->genres); 
         Alert::success('Success', 'Data has been Updated');
         return back();
     }

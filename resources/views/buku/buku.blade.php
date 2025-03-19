@@ -16,6 +16,7 @@ Buku
             <th>Judul</th>
             <th>Penerbit</th>
             <th>Genre</th>
+            <th>Assets</th>
             <th>Action</th>
         </tr>
         @foreach($datas as $key => $data)
@@ -137,7 +138,7 @@ Buku
                 @csrf @method("POST")
                 <div class="modal-body">
                     <lable>Judul :</lable>
-                    <input type="text" name="name">
+                    <input type="text" name="judul" value="{{ $data->judul }}">
                     <br>
                     <lable>Penerbit :</lable>
                     <select name="penerbit_id" class="form-select" id="penerbit_id" required>
@@ -146,9 +147,36 @@ Buku
                         @endforeach
                     </select>
                     <br>
-                    <lable>Genre :</lable>
-                    <input type="text" name="name">
-                    <br>
+                    <div id="categories-container-{{ $data->id }}">
+                        @foreach ($data->genres as $genrebuku)
+                        <div class="row category-row">
+                            <div class="col-9">
+                                <div class="input-group mb-3">
+                                    <div class="form-floating">
+                                        <select name="genres[]" class="form-select">
+                                            <option>Select Genre</option>
+                                            @foreach ($genres as $genre)
+                                            <option value="{{ $genre->id }}"
+                                                {{ $genre->id == $genrebuku->id ? 'selected' : '' }}>
+                                                {{ $genre->name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        <label for="genre">Genre</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="d-flex align-items-center justify-content-evenly">
+                                    <div class="btn btn-danger" onclick="deleteCategoryUpdate(this)"><i
+                                            class="fa-solid fa-trash"></i></div>
+                                    <div class="btn btn-primary"
+                                        onclick="addCategoryUpdate('{{ $data->id }}')">+</div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
 
                 </div>
                 <div class="modal-footer">
