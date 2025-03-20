@@ -35,12 +35,7 @@ class BukuController extends Controller
         $item->penerbit_id = $request->penerbit_id;
         $item->save();
         if ($request->has('genres')) {
-            foreach ($request->genres as $genreId) {
-                $bukugenre = new BukuGenre();
-                $bukugenre->buku_id = $item->id;
-                $bukugenre->genre_id = $genreId;
-                $bukugenre->save();
-            }
+            $item->genres()->sync($request->genres);
         }
         Alert::success('Success', 'Data has been Created');
         return back();
