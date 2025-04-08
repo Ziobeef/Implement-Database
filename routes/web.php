@@ -3,7 +3,10 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CoinController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\KursController;
 use App\Http\Controllers\PenerbitController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StoreController;
@@ -78,4 +81,22 @@ Route::group(['prefix' => 'category'], function () {
     Route::post('/create', [CategoryController::class, 'create'])->name('create');
     Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
     Route::post('/update/{id}', [CategoryController::class, 'update'])->name('update');
+});
+Route::group(['prefix' => 'coin'], function () {
+    Route::get('/', [CoinController::class, 'index'])->name('index');
+    Route::post('/create', [CoinController::class, 'create'])->name('create');
+    Route::get('/delete/{id}', [CoinController::class, 'delete'])->name('delete');
+    Route::post('/update/{id}', [CoinController::class, 'update'])->name('update');
+});
+Route::group(['prefix' => 'country'], function () {
+    Route::get('/', [CountryController::class, 'index'])->name('index');
+    Route::post('/create', [CountryController::class, 'create'])->name('create');
+    Route::get('/delete/{id}', [CountryController::class, 'delete'])->name('delete');
+    Route::post('/update/{id}', [CountryController::class, 'update'])->name('update');
+});
+Route::group(['prefix' => 'kurs'], function () {
+    Route::get('/', [KursController::class, 'index'])->name('index');
+    Route::post('/create', [KursController::class, 'create'])->name('create');
+    Route::get('/delete/{id}', [KursController::class, 'delete'])->name('delete');
+    Route::post('/update/{id}', [KursController::class, 'update'])->name('update');
 });

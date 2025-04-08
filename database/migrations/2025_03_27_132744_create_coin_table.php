@@ -15,6 +15,9 @@ class CreateCoinTable extends Migration
     {
         Schema::create('coin', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kurs_id')->constrained('kurs')->onDelete('cascade');
+            $table->string('name', 32);
+            $table->string('code', 8);      
             $table->timestamps();
         });
     }
