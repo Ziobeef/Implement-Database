@@ -25,7 +25,7 @@ Coin
             <td>{{$data->code}}</td>
             <td>{{ $data->kurs->name }}</td>
             <td>
-                @foreach ($data->kurses as $key => $kurs)
+                @foreach ($data->$kurses as $key => $kurs)
                 {{ $kurs->name }}
                 @if ($key < count($data->kurs) - 1)
                     ,
@@ -42,7 +42,7 @@ Coin
     </table>
 </div>
 
-<form method="post" action="{{url('kurs/create')}}">
+<form method="post" action="{{url('coin/create')}}">
     @csrf @method("post")
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog">
