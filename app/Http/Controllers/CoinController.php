@@ -12,7 +12,7 @@ class CoinController extends Controller
 {
     public function index()
     {
-        $item = Coin::all();
+        $item = Coin::orderBy('created_at','desc')->get();
         $kurses = Kurs::all();
         $countries = Country::all();
         $data = [

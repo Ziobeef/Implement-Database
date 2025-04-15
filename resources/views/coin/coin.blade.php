@@ -16,6 +16,7 @@ Coin
             <th>Name</th>
             <th>Code</th>
             <th>Kurs</th>
+            <th>Countries</th>
             <th>Action</th>
         </tr>
         @foreach($datas as $key => $data)
@@ -25,12 +26,13 @@ Coin
             <td>{{$data->code}}</td>
             <td>{{ $data->kurs->name }}</td>
             <td>
-                @foreach ($data->$kurses as $key => $kurs)
-                {{ $kurs->name }}
-                @if ($key < count($data->kurs) - 1)
+                @foreach ($data->countries as $key => $country)
+                {{ $country->name }}
+                @if ($key < count($data->countries) - 1)
                     ,
                     @endif
                     @endforeach
+             
                
             </td>
             <td>
@@ -148,7 +150,7 @@ Coin
                     <lable>kurs :</lable>
                     <select name="kurs_id" class="form-select" id="kurs_id" required>
                         @foreach ($kurses as $kurs)
-                        <option value="{{ $kurs->id }}" {{ $kurs>id == $data->kurs_id ? 'selected' : '' }}>{{ $kurs->name }}</option>
+                        <option value="{{ $kurs->id }}" {{ $kurs->id == $data->kurs_id ? 'selected' : '' }}>{{ $kurs->name }}</option>
                         @endforeach
                     </select>
                     
@@ -196,7 +198,7 @@ Coin
 @endforeach
 <script>
     function addCountry() {
-        const container = document.getElementById('countries-container');
+        const container = document.getElementById('country-container');
         const newRow = container.firstElementChild.cloneNode(true);
         newRow.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
         const selectElement = newRow.querySelector('select');
@@ -208,7 +210,7 @@ Coin
     }
 
     function deleteCountry(button) {
-        const container = document.getElementById('countries-container');
+        const container = document.getElementById('country-container');
         if (container.children.length > 1) {
             button.closest('.country-row').remove();
         } else {
