@@ -7,6 +7,7 @@ use App\Http\Controllers\CoinController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\KursController;
+use App\Http\Controllers\LoopController;
 use App\Http\Controllers\PenerbitController;
 use App\Http\Controllers\SponsorController;
 use App\Http\Controllers\StoreController;
@@ -100,3 +101,8 @@ Route::group(['prefix' => 'kurs'], function () {
     Route::get('/delete/{id}', [KursController::class, 'delete'])->name('delete');
     Route::post('/update/{id}', [KursController::class, 'update'])->name('update');
 });
+Route::group(['prefix' => 'loop'], function () {
+    Route::get('/', [LoopController::class, 'index'])->name('index');
+});
+
+
